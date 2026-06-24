@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+
+<VBox alignment="CENTER" spacing="18" styleClass="root-menu" xmlns:fx="http://javafx.com/fxml" fx:controller="com.mycompany.undertale_3.controller.MenuController">
+    <ImageView fx:id="logo"
+                       layoutX="120" layoutY="150"
+                       fitWidth="500" fitHeight="600"
+                       preserveRatio="true" />
+    <Label text="AS RUÍNAS ETERNAS" styleClass="subtitulo" />
+    <TextField fx:id="nomeField" promptText="Digite seu nome" maxWidth="300" styleClass="campo" />
+    <Button text="JOGAR" onAction="#jogar" styleClass="menu-btn" />
+    <Button text="RANKING" onAction="#ranking" styleClass="menu-btn" />
+    <Button text="CRÉDITOS" onAction="#creditos" styleClass="menu-btn" />
+    <Button text="ENCERRAR" onAction="#encerrar" styleClass="menu-btn" />
+</VBox>

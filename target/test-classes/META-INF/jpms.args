@@ -1,0 +1,4 @@
+--patch-module
+com.mycompany.undertale_3=_
+--add-reads
+com.mycompany.undertale_3=ALL-UNNAMED

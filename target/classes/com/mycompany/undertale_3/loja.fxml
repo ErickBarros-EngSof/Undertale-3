@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox spacing="18" alignment="CENTER" xmlns:fx="http://javafx.com/fxml" fx:controller="com.mycompany.undertale_3.controller.LojaController" styleClass="painel">
+    <Label text="LOJA DAS RUÍNAS" styleClass="titulo-menor" />
+    <Label fx:id="moedasLabel" />
+    <Button text="Comprar Poção - 25 moedas" onAction="#comprarPocao" />
+    <Button text="Comprar Bomba - 50 moedas" onAction="#comprarBomba" />
+    <Button text="Comprar Chave Antiga - 80 moedas" onAction="#comprarChave" />
+    <Button text="Voltar" onAction="#voltar" />
+</VBox>

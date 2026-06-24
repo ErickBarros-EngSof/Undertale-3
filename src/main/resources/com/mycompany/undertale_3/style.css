@@ -1,0 +1,32 @@
+.root-menu, .painel, .boss-root, .game-root {
+    -fx-background-color: radial-gradient(center 50% 30%, radius 80%, #1a0a2e, #050508);
+    -fx-font-family: "Consolas";
+    -fx-text-fill: #e8d8f8;
+}
+.titulo {
+    -fx-font-size: 34px;
+    -fx-text-fill: #c8a0f0;
+    -fx-effect: dropshadow(gaussian, #8040c0, 18, 0.6, 0, 0);
+    -fx-font-weight: bold;
+}
+.subtitulo { -fx-font-size: 15px; -fx-text-fill: #8b70bd; }
+.titulo-menor { -fx-font-size: 24px; -fx-text-fill: #c8a0f0; -fx-font-weight: bold; }
+.campo { -fx-background-color: #10071f; -fx-text-fill: white; -fx-prompt-text-fill: #7d6a96; -fx-border-color: #6d3eb1; }
+.menu-btn, Button {
+    -fx-background-color: transparent;
+    -fx-border-color: #7c3aed;
+    -fx-text-fill: #e9d5ff;
+    -fx-font-size: 15px;
+    -fx-padding: 8 18;
+    -fx-cursor: hand;
+}
+.menu-btn:hover, Button:hover { -fx-background-color: #2e1065; -fx-effect: dropshadow(gaussian, #a855f7, 12, .5, 0, 0); }
+.hud { -fx-background-color: rgba(0,0,0,.75); -fx-padding: 12; }
+.hud Label, .painel Label, .boss-root Label { -fx-text-fill: #e8d8f8; -fx-font-size: 15px; }
+.mapa { -fx-background-color: #060410; }
+.arena { -fx-fill: #0b1020; -fx-stroke: #5b21b6; -fx-stroke-width: 3; }
+.msg { -fx-text-fill: #fef08a; -fx-font-size: 16px; }
+.table-view { -fx-background-color: #0f071a; }
+.table-view .column-header { -fx-background-color: #2e1065; }
+.table-row-cell { -fx-background-color: #10071f; -fx-text-fill: white; }
+.table-row-cell:selected { -fx-background-color: #581c87; }

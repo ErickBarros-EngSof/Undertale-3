@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox spacing="18" alignment="CENTER" xmlns:fx="http://javafx.com/fxml" fx:controller="com.mycompany.undertale_3.controller.UpgradesController" styleClass="painel">
+    <Label text="UPGRADES PERMANENTES" styleClass="titulo-menor" />
+    <Label fx:id="pontosLabel" />
+    <Button text="Comprar +20 HP - 150 pontos" onAction="#comprarHp" />
+    <Button text="Comprar +5 Ataque - 150 pontos" onAction="#comprarAtk" />
+    <Button text="Comprar +3 Defesa - 100 pontos" onAction="#comprarDef" />
+    <Button text="Voltar" onAction="#voltar" />
+</VBox>

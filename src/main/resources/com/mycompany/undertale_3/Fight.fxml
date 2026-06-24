@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.image.ImageView?>
+
+
+<Pane fx:id="fightPane"
+      prefWidth="800"
+      prefHeight="600"
+      focusTraversable="true"
+      onKeyPressed="#moverPlayer"
+      onMouseClicked="#atacar"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mycompany.undertale_3.controller.FightController">
+
+    <Rectangle width="800" height="600" fill="black"/>
+
+    <Label fx:id="vidaInimigoLabel"
+           layoutX="300"
+           layoutY="40"
+           text="Vida do inimigo: 50"
+           style="-fx-text-fill: white;"/>
+
+    <ImageView fx:id="player" layoutX="380" layoutY="500" fitWidth="100" fitHeight="100" preserveRatio="true"/>
+
+    <ImageView fx:id="inimigo" layoutX="350" layoutY="280" fitWidth="200" fitHeight="200"/>
+
+</Pane>

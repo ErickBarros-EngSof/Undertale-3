@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.mycompany.undertale_3.controller.SplashController"
+           fx:id="rootPane"
+           prefWidth="1280"
+           prefHeight="720"
+           style="-fx-background-color: black;">
+
+    <!-- Conteúdo central -->
+    <VBox fx:id="logoContainer"
+          alignment="CENTER"
+          spacing="20"
+          opacity="0.0"
+          StackPane.alignment="CENTER">
+
+        <ImageView fx:id="logoImage"
+                   fitWidth="420"
+                   fitHeight="420"
+                   preserveRatio="true"
+                   smooth="true"/>
+
+        <Label fx:id="subtitleLabel"
+               text=""
+               opacity="0.0"
+               style="-fx-text-fill: white;
+                      -fx-font-size: 18px;
+                      -fx-font-family: Arial;" />
+
+    </VBox>
+
+    <!-- Fade preto -->
+    <Rectangle fx:id="blackOverlay"
+               fill="black"
+               opacity="1.0"/>
+
+</StackPane>

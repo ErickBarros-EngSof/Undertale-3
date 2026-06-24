@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox spacing="16" alignment="CENTER" xmlns:fx="http://javafx.com/fxml" fx:controller="com.mycompany.undertale_3.controller.RankingController" styleClass="painel">
+    <Label text="RANKING" styleClass="titulo-menor" />
+    <TableView fx:id="tabela" prefWidth="520" prefHeight="320">
+        <columns>
+            <TableColumn fx:id="nomeCol" text="Nome" prefWidth="220" />
+            <TableColumn fx:id="pontosCol" text="Pontos" prefWidth="150" />
+            <TableColumn fx:id="runsCol" text="Runs" prefWidth="100" />
+        </columns>
+    </TableView>
+    <Button text="Menu" onAction="#menu" />
+</VBox>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox spacing="15" alignment="CENTER" xmlns:fx="http://javafx.com/fxml" fx:controller="com.mycompany.undertale_3.controller.InventarioController" styleClass="painel">
+    <Label text="INVENTÁRIO DA RUN" styleClass="titulo-menor" />
+    <TableView fx:id="tabela" prefWidth="360" prefHeight="220">
+        <columns>
+            <TableColumn fx:id="nomeCol" text="Item" prefWidth="220" />
+            <TableColumn fx:id="qtdCol" text="Qtd" prefWidth="100" />
+        </columns>
+    </TableView>
+</VBox>

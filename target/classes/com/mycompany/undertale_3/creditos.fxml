@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox spacing="18" alignment="CENTER" xmlns:fx="http://javafx.com/fxml" fx:controller="com.mycompany.undertale_3.controller.CreditosController" styleClass="painel">
+    <Label text="CRÉDITOS" styleClass="titulo-menor" />
+    <Label text="Desenvolvido por: Erick Pinheiro de Barros" />
+    <Label text="Tecnologias: Java, JavaFX FXML, CSS, PostgreSQL" />
+    <Label text="Tema: RPG em ruínas com combate, moedas, upgrades e boss." wrapText="true" />
+    <Label text="Realização: SMT "/>
+    <Button text="Voltar" onAction="#voltar" />
+</VBox>
