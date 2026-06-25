@@ -22,6 +22,14 @@ public class CombatMenuController {
         inimigo1.setImage(new Image(getClass().getResourceAsStream("/com/mycompany/undertale_3/inimigo.png")));
     }
 
+    private Jogo2Controller jogo2Controller;
+
+    public void receberDados2(Jogo2Controller jogo2Controller, String nomeInimigo, Stage stage) {
+        this.jogo2Controller = jogo2Controller;
+        this.inimigo = inimigo;
+        this.stage = stage;
+    }
+    
     public void receberDados(JogoController gameController, String inimigo, Stage stage) {
         this.gameController = gameController;
         this.inimigo = inimigo;
@@ -35,7 +43,11 @@ public class CombatMenuController {
 
     @FXML
     private void lutar() {
+        if (gameController != null) {
         gameController.abrirFight(inimigo, stage);
+    } else if (jogo2Controller != null) {
+        jogo2Controller.abrirFight(inimigo, stage);
+        }
     }
 
     @FXML

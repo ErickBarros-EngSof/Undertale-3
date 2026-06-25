@@ -6,6 +6,7 @@
     <Label text="Desenvolvido por: Erick Pinheiro de Barros" />
     <Label text="Tecnologias: Java, JavaFX FXML, CSS, PostgreSQL" />
     <Label text="Tema: RPG em ruínas com combate, moedas, upgrades e boss." wrapText="true" />
+    <Label text="Inpirado em Undertale" wrapText="true" />
     <Label text="Realização: SMT "/>
     <Button text="Voltar" onAction="#voltar" />
 </VBox>

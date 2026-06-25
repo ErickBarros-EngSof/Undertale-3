@@ -18,7 +18,6 @@
             <Button text="Inventário" onAction="#abrirInventario" />
             <Button text="Loja" onAction="#abrirLoja" />
             <Button text="Upgrades" onAction="#abrirUpgrades" />
-            <Button fx:id="bossBtn" text="Boss" onAction="#abrirBoss" />
             <Button text="Desistir" onAction="#desistir" />
         </HBox>
     </top>

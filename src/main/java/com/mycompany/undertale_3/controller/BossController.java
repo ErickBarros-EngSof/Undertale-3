@@ -7,13 +7,19 @@ import com.mycompany.undertale_3.util.GameSession;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import java.util.Random;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class BossController {
     @FXML private Label hpPlayerLabel, hpBossLabel, msgLabel;
     private int hpBoss = 220;
     private final Random random = new Random();
+    @FXML private ImageView inimigo;
 
-    @FXML void initialize() { atualizar(); }
+    @FXML void initialize() { 
+        atualizar(); 
+        inimigo.setImage(new Image(getClass().getResourceAsStream("/com/mycompany/undertale_3/boss.png")));
+    }
 
     @FXML void atacar() {
         int dano = GameSession.atk + 15 + random.nextInt(15);

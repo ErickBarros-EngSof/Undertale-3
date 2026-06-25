@@ -1,6 +1,5 @@
 package com.mycompany.undertale_3.controller;
 
-import javafx.scene.media.*;
 import com.mycompany.undertale_3.App;
 import com.mycompany.undertale_3.dao.JogadorDAO;
 import com.mycompany.undertale_3.dao.RunDAO;
@@ -15,16 +14,64 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
-public class JogoController {
+public class Jogo2Controller {
 
     private Media media;
     private MediaPlayer playerv;
+
     @FXML private Pane mapaPane;
-    @FXML private Label nomeLabel, hpLabel, moedasLabel, pontosLabel, msgLabel;
-    @FXML private ImageView player, inimigo1, inimigo2, inimigo3, bau1, bau2, bossPortal;
+
+    @FXML private Label nomeLabel;
+    @FXML private Label hpLabel;
+    @FXML private Label moedasLabel;
+    @FXML private Label pontosLabel;
+    @FXML private Label msgLabel;
+
+    @FXML private ImageView player;
+    @FXML private ImageView inimigo1;
+    @FXML private ImageView inimigo2;
+    @FXML private ImageView inimigo3;
+    @FXML private ImageView inimigo4;
+    @FXML private ImageView inimigo5;
+
+    @FXML private ImageView bau1;
+    @FXML private ImageView bau2;
+    @FXML private ImageView bau3;
+
+    @FXML private ImageView bossPortal;
+
+    @FXML private Button bossBtn;
+
+    @FXML
+    void initialize() {
+        iniciarMusica();
+        atualizarHud();
+
+        player.setImage(img("personagem.png"));
+
+        inimigo1.setImage(img("inimigo.png"));
+        inimigo2.setImage(img("inimigo.png"));
+        inimigo3.setImage(img("inimigo.png"));
+        inimigo4.setImage(img("inimigo.png"));
+        inimigo5.setImage(img("inimigo.png"));
+
+        bau1.setImage(img("bau.png"));
+        bau2.setImage(img("bau.png"));
+        bau3.setImage(img("bau.png"));
+
+        bossPortal.setImage(img("portal.png"));
+        bossPortal.setVisible(false);
+
+        bossBtn.setDisable(true);
+
+        Platform.runLater(() -> mapaPane.requestFocus());
+    }
 
     private void iniciarMusica() {
         try {
@@ -43,23 +90,12 @@ public class JogoController {
             System.out.println("Erro ao carregar música: " + e.getMessage());
         }
     }
-    
-    @FXML
-    void initialize() {
-        atualizarHud();
 
-        player.setImage(img("personagem.png"));
-        inimigo1.setImage(img("inimigo.png"));
-        inimigo2.setImage(img("inimigo.png"));
-        inimigo3.setImage(img("inimigo.png"));
-        bau1.setImage(img("bau.png"));
-        bau2.setImage(img("bau.png"));
-        bossPortal.setImage(img("portal.png"));
-
-        bossPortal.setVisible(false);
-        
-
-        Platform.runLater(() -> mapaPane.requestFocus());
+    private void pararMusica() {
+        if (playerv != null) {
+            playerv.stop();
+            playerv.dispose();
+        }
     }
 
     private Image img(String nome) {
@@ -67,7 +103,7 @@ public class JogoController {
     }
 
     @FXML
-    private void teclaPressionada(javafx.scene.input.KeyEvent event) {
+    private void teclaPressionada(KeyEvent event) {
         switch (event.getCode()) {
             case W -> mover(0, -18);
             case S -> mover(0, 18);
@@ -78,56 +114,40 @@ public class JogoController {
     }
 
     private void mover(double dx, double dy) {
-        player.setLayoutX(Math.max(20, Math.min(840, player.getLayoutX() + dx)));
-        player.setLayoutY(Math.max(70, Math.min(500, player.getLayoutY() + dy)));
+        double novoX = player.getLayoutX() + dx;
+        double novoY = player.getLayoutY() + dy;
+
+        player.setLayoutX(Math.max(20, Math.min(820, novoX)));
+        player.setLayoutY(Math.max(70, Math.min(470, novoY)));
+
         verificarColisoes();
-    }
-    
-    private void verificarPortal() {
-
-        if (!GameSession.bossDesbloqueado) {
-            return;
-        }
-
-        if (bossPortal.isVisible() &&
-            player.getBoundsInParent().intersects(bossPortal.getBoundsInParent())) {
-
-            try {
-
-                if (playerv != null) {
-                    playerv.stop();
-                    playerv.dispose();
-                }
-
-                App.trocarTela("Jogo2.fxml", "Mapa 2");
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     private void verificarColisoes() {
         verificarBau(bau1);
         verificarBau(bau2);
+        verificarBau(bau3);
 
         verificarInimigo(inimigo1);
         verificarInimigo(inimigo2);
         verificarInimigo(inimigo3);
+        verificarInimigo(inimigo4);
+        verificarInimigo(inimigo5);
 
         if (GameSession.inimigosDerrotados >= 3) {
             desbloquearBoss();
         }
-        verificarPortal();
     }
 
     private void verificarBau(ImageView bau) {
         if (bau.isVisible() && player.getBoundsInParent().intersects(bau.getBoundsInParent())) {
             bau.setVisible(false);
+
             GameSession.moedasRun += 15;
             GameSession.pontosRun += 10;
             GameSession.addItem("Cristal", 1);
-            msgLabel.setText("Você abriu uma bolsa misteriosa!");
+
+            msgLabel.setText("Você abriu um baú misterioso!");
             atualizarHud();
         }
     }
@@ -139,51 +159,57 @@ public class JogoController {
     }
 
     private void abrirCombatMenu(ImageView inimigo) {
-    try {
-        FXMLLoader loader = new FXMLLoader(
-                App.class.getResource("/com/mycompany/undertale_3/CombatMenu.fxml")
-        );
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    App.class.getResource("/com/mycompany/undertale_3/CombatMenu.fxml")
+            );
 
-        Parent root = loader.load();
+            Parent root = loader.load();
 
-        Stage stage = new Stage();
-        stage.setTitle("Menu de Combate");
+            Stage stage = new Stage();
+            stage.setTitle("Menu de Combate");
 
-        CombatMenuController controller = loader.getController();
-        controller.receberDados(this, "Inimigo das Ruínas", stage);
+            CombatMenuController controller = loader.getController();
+            controller.receberDados2(this, "Inimigo das Ruínas", stage);
 
-        stage.setScene(new Scene(root));
-        stage.show();
+            stage.setScene(new Scene(root));
+            stage.show();
 
-        inimigo.setVisible(false);
-        GameSession.inimigosDerrotados++;
+            inimigo.setVisible(false);
+            GameSession.inimigosDerrotados++;
 
-        if (GameSession.inimigosDerrotados >= 3) {
-            desbloquearBoss();
+            if (GameSession.inimigosDerrotados >= 3) {
+                desbloquearBoss();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-    } catch (IOException e) {
-        e.printStackTrace();
     }
-}
 
     private void desbloquearBoss() {
         GameSession.bossDesbloqueado = true;
         bossPortal.setVisible(true);
-        msgLabel.setText("Entre no portal roxo.");
+        bossBtn.setDisable(false);
+        msgLabel.setText("Boss desbloqueado! Entre no portal roxo.");
     }
 
     @FXML
     void abrirInventario() {
         try {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/mycompany/undertale_3/inventario.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    App.class.getResource("/com/mycompany/undertale_3/inventario.fxml")
+            );
+
             Parent root = loader.load();
 
             Stage stage = new Stage();
             stage.setTitle("Inventário da run atual");
 
             Scene scene = new Scene(root, 420, 320);
-            scene.getStylesheets().add(App.class.getResource("/com/mycompany/undertale_3/style.css").toExternalForm());
+            scene.getStylesheets().add(
+                    App.class.getResource("/com/mycompany/undertale_3/style.css").toExternalForm()
+            );
 
             stage.setScene(scene);
             stage.show();
@@ -193,14 +219,46 @@ public class JogoController {
         }
     }
 
-    @FXML void abrirLoja() { App.trocarTela("loja.fxml", "Loja"); }
-    @FXML void abrirUpgrades() { App.trocarTela("upgrades.fxml", "Upgrades"); }
-    @FXML void abrirBoss() { if (GameSession.bossDesbloqueado) App.trocarTela("boss.fxml", "Boss Final"); }
-    @FXML void desistir() { fimRun(false); }
+    @FXML
+    void abrirLoja() {
+        pararMusica();
+        App.trocarTela("loja.fxml", "Loja");
+    }
+
+    @FXML
+    void abrirUpgrades() {
+        pararMusica();
+        App.trocarTela("upgrades.fxml", "Upgrades");
+    }
+
+    @FXML
+    void abrirBoss() {
+        if (GameSession.bossDesbloqueado) {
+            pararMusica();
+            App.trocarTela("boss.fxml", "Boss Final");
+        }
+    }
+
+    @FXML
+    void desistir() {
+        pararMusica();
+        fimRun(false);
+    }
 
     private void fimRun(boolean venceu) {
-        new RunDAO().salvarRun(GameSession.jogador.getId(), GameSession.pontosRun, GameSession.moedasRun, venceu);
-        new JogadorDAO().somarResultado(GameSession.jogador.getId(), GameSession.pontosRun, GameSession.moedasRun);
+        new RunDAO().salvarRun(
+                GameSession.jogador.getId(),
+                GameSession.pontosRun,
+                GameSession.moedasRun,
+                venceu
+        );
+
+        new JogadorDAO().somarResultado(
+                GameSession.jogador.getId(),
+                GameSession.pontosRun,
+                GameSession.moedasRun
+        );
+
         App.trocarTela("ranking.fxml", venceu ? "Vitória" : "Fim de Run");
     }
 
@@ -213,19 +271,24 @@ public class JogoController {
 
     public void abrirFight(String nomeInimigo, Stage menuStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/mycompany/undertale_3/Fight.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    App.class.getResource("/com/mycompany/undertale_3/Fight.fxml")
+            );
+
             Parent root = loader.load();
 
             Stage fightStage = new Stage();
             fightStage.setTitle("Luta contra " + nomeInimigo);
 
             FightController controller = loader.getController();
-            controller.receberDados(this, nomeInimigo, fightStage);
+            controller.receberDados2(this, nomeInimigo, fightStage);
 
             fightStage.setScene(new Scene(root));
             fightStage.show();
 
-            if (menuStage != null) menuStage.close();
+            if (menuStage != null) {
+                menuStage.close();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -247,6 +310,7 @@ public class JogoController {
     }
 
     public void abrirGameOver() {
+        pararMusica();
         App.trocarTela("GameOver.fxml", "GAME OVER");
     }
 
@@ -270,3 +334,4 @@ public class JogoController {
         msgLabel.setText("Item coletado: " + item);
     }
 }
+

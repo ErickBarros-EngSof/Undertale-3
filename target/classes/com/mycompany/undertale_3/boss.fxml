@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+
 <VBox spacing="20" alignment="CENTER" xmlns:fx="http://javafx.com/fxml" fx:controller="com.mycompany.undertale_3.controller.BossController" styleClass="boss-root">
-    <Label text="BOSS FINAL: LYSARA" styleClass="titulo" />
+    <ImageView fx:id="inimigo" layoutX="350" layoutY="280" fitWidth="300" fitHeight="300"/>
+    <Label text="BOSS FINAL: MICHEL TEMER" styleClass="titulo" />
     <Label fx:id="hpPlayerLabel" />
     <Label fx:id="hpBossLabel" />
-    <Label fx:id="msgLabel" text="Lysara bloqueia o caminho final." styleClass="msg" />
+    <Label fx:id="msgLabel" text="Michel Temer bloqueia o caminho final." styleClass="msg" />
     <HBox spacing="15" alignment="CENTER">
         <Button text="Atacar" onAction="#atacar" />
         <Button text="Usar Poção" onAction="#usarPocao" />

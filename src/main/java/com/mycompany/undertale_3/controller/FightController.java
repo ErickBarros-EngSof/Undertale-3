@@ -25,6 +25,7 @@ public class FightController {
     @FXML private Label vidaInimigoLabel;
 
     private JogoController gameController;
+    private Jogo2Controller game2Controller;
     private Stage stage;
     private int vidaInimigo = 100;
     private double velocidadePlayer = 10;
@@ -39,6 +40,14 @@ public class FightController {
     public void setGameController(JogoController gameController) {
     this.gameController = gameController;
     }
+    
+    private Jogo2Controller jogo2Controller;
+
+        public void receberDados2(Jogo2Controller jogo2Controller, String nomeInimigo, Stage stage) {
+            this.jogo2Controller = jogo2Controller;
+            this.inimigo = inimigo;
+            this.stage = stage;
+        }
     
     @FXML
     public void initialize() {
@@ -132,6 +141,24 @@ public class FightController {
 
                         return;
                     }
+                }else if (game2Controller != null) {
+                    game2Controller.levarDano(5);
+
+                    if (game2Controller.jogadorMorreu()) {
+                        batalhaEncerrada = true;
+
+                        if (timer != null) {
+                            timer.stop();
+                        }
+
+                        game2Controller.abrirGameOver();
+
+                        if (stage != null) {
+                            stage.close();
+                        }
+
+                        return;
+                    }
                 }
             }
         }
@@ -146,7 +173,14 @@ public class FightController {
             gameController.ganharXP(25);
             gameController.ganharMoedas(20);
             gameController.adicionarItem("Fragmento de alma");
+        }else if(game2Controller != null) {
+            game2Controller.ganharXP(25);
+            game2Controller.ganharMoedas(20);
+            game2Controller.adicionarItem("Fragmento de alma");
         }
+        
+        
+        
         if (stage != null) stage.close();
     }
 
