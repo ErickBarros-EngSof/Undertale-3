@@ -1,4 +1,3 @@
-com\mycompany\undertale_3\controller\Jogo2Controller$1.class
 com\mycompany\undertale_3\controller\CreditosController.class
 com\mycompany\undertale_3\controller\UpgradesController.class
 com\mycompany\undertale_3\dao\JogadorDAO.class
@@ -13,12 +12,12 @@ com\mycompany\undertale_3\controller\CombatMenuController.class
 com\mycompany\undertale_3\controller\FightController.class
 com\mycompany\undertale_3\dao\ConnectionFactory.class
 com\mycompany\undertale_3\controller\SplashController.class
-com\mycompany\undertale_3\controller\Jogo2Controller.class
 com\mycompany\undertale_3\dao\UpgradeDAO.class
 com\mycompany\undertale_3\model\RankingLinha.class
 com\mycompany\undertale_3\controller\GameOverController.class
 com\mycompany\undertale_3\model\Item.class
 com\mycompany\undertale_3\controller\MenuController.class
+com\mycompany\undertale_3\controller\FinalFelizController.class
 com\mycompany\undertale_3\controller\FightController$1.class
 module-info.class
 com\mycompany\undertale_3\controller\BossController.class

@@ -10,11 +10,13 @@
             styleClass="game-root">
 
     <top>
-        <HBox spacing="25" alignment="CENTER_LEFT" styleClass="hud">
+        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="hud">
             <Label fx:id="nomeLabel" text="Jogador" />
+            <Label fx:id="faseLabel" text="Fase: 1" />
             <Label fx:id="hpLabel" text="HP" />
             <Label fx:id="moedasLabel" text="Moedas" />
             <Label fx:id="pontosLabel" text="Pontos" />
+
             <Button text="Inventário" onAction="#abrirInventario" />
             <Button text="Loja" onAction="#abrirLoja" />
             <Button text="Upgrades" onAction="#abrirUpgrades" />
@@ -69,10 +71,9 @@
                        fitWidth="100" fitHeight="100"
                        preserveRatio="true" />
 
-
             <VBox layoutX="20" layoutY="505" spacing="8">
                 <Label fx:id="msgLabel"
-                       text="Derrote 3 inimigos para desbloquear o Boss."
+                       text="Derrote os inimigos para liberar o portal."
                        styleClass="msg" />
             </VBox>
 

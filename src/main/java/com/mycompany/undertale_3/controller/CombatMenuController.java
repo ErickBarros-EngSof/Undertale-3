@@ -22,14 +22,6 @@ public class CombatMenuController {
         inimigo1.setImage(new Image(getClass().getResourceAsStream("/com/mycompany/undertale_3/inimigo.png")));
     }
 
-    private Jogo2Controller jogo2Controller;
-
-    public void receberDados2(Jogo2Controller jogo2Controller, String nomeInimigo, Stage stage) {
-        this.jogo2Controller = jogo2Controller;
-        this.inimigo = inimigo;
-        this.stage = stage;
-    }
-    
     public void receberDados(JogoController gameController, String inimigo, Stage stage) {
         this.gameController = gameController;
         this.inimigo = inimigo;
@@ -37,24 +29,21 @@ public class CombatMenuController {
         inimigoLabel.setText(inimigo);
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
     @FXML
     private void lutar() {
         if (gameController != null) {
-        gameController.abrirFight(inimigo, stage);
-    } else if (jogo2Controller != null) {
-        jogo2Controller.abrirFight(inimigo, stage);
+            gameController.abrirFight(inimigo, stage);
         }
     }
 
     @FXML
     private void conversar() {
-        if (new Random().nextBoolean()) {
-            mensagemLabel.setText("O inimigo aceitou conversar. Você ganhou XP!");
+        if (gameController == null) return;
+
+        if (new Random().nextInt(100) < 45) {
+            mensagemLabel.setText("O inimigo aceitou conversar. Você ganhou pontos!");
             gameController.ganharXP(15);
+            if (stage != null) stage.close();
         } else {
             mensagemLabel.setText("O inimigo rejeitou sua frase. Você levou dano!");
             gameController.levarDano(15);
@@ -63,6 +52,8 @@ public class CombatMenuController {
 
     @FXML
     private void fugir() {
+        if (gameController == null) return;
+
         if (new Random().nextInt(100) < 50) {
             mensagemLabel.setText("Você conseguiu fugir!");
             if (stage != null) stage.close();
@@ -72,4 +63,3 @@ public class CombatMenuController {
         }
     }
 }
-

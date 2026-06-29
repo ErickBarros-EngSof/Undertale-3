@@ -10,10 +10,11 @@ public class GameSession {
     public static int hp, maxHp, atk, def, moedasRun, pontosRun, inimigosDerrotados;
     public static boolean bossDesbloqueado;
     public static ObservableList<Item> inventario = FXCollections.observableArrayList();
+    public static int faseAtual = 1;
 
     public static void novaRun(Jogador j, int upHp, int upAtk, int upDef) {
         jogador = j;
-        maxHp = 100 + upHp * 20;
+        maxHp = 100 + upHp * 40;
         hp = maxHp;
         atk = 15 + upAtk * 5;
         def = 5 + upDef * 3;

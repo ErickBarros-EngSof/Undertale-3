@@ -12,10 +12,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import java.util.Random;
-import static javafx.scene.input.KeyCode.A;
-import static javafx.scene.input.KeyCode.D;
-import static javafx.scene.input.KeyCode.S;
-import static javafx.scene.input.KeyCode.W;
 
 public class FightController {
 
@@ -25,48 +21,52 @@ public class FightController {
     @FXML private Label vidaInimigoLabel;
 
     private JogoController gameController;
-    private Jogo2Controller game2Controller;
     private Stage stage;
+
+    private int faseAtual = 1;
     private int vidaInimigo = 100;
+    private int vidaMaxInimigo = 100;
+
     private double velocidadePlayer = 10;
     private double velocidadeInimigo = 2;
     private double direcaoX = 1;
     private double direcaoY = 1;
+
     private final Random random = new Random();
     private AnimationTimer timer;
     private boolean batalhaEncerrada = false;
     private long ultimoDano = 0;
 
-    public void setGameController(JogoController gameController) {
-    this.gameController = gameController;
-    }
-    
-    private Jogo2Controller jogo2Controller;
-
-        public void receberDados2(Jogo2Controller jogo2Controller, String nomeInimigo, Stage stage) {
-            this.jogo2Controller = jogo2Controller;
-            this.inimigo = inimigo;
-            this.stage = stage;
-        }
-    
     @FXML
     public void initialize() {
         player.setImage(new Image(getClass().getResourceAsStream("/com/mycompany/undertale_3/personagem.png")));
         inimigo.setImage(new Image(getClass().getResourceAsStream("/com/mycompany/undertale_3/inimigo.png")));
+
         Platform.runLater(() -> fightPane.requestFocus());
+
         atualizarVida();
         iniciarMovimentoInimigo();
     }
 
-    public void receberDados(JogoController gameController, String nomeInimigo, Stage stage) {
+    public void receberDados(JogoController gameController, String nomeInimigo, Stage stage, int faseAtual) {
         this.gameController = gameController;
         this.stage = stage;
+        this.faseAtual = faseAtual;
+
+        this.vidaMaxInimigo = 80 + faseAtual * 45;
+        this.vidaInimigo = vidaMaxInimigo;
+        this.velocidadeInimigo = 2 + faseAtual * 0.7;
+
+        inimigo.setFitWidth(150 + faseAtual * 10);
+        inimigo.setFitHeight(150 + faseAtual * 10);
+
+        atualizarVida();
     }
-    
 
     @FXML
     private void moverPlayer(KeyEvent event) {
         if (batalhaEncerrada) return;
+
         switch (event.getCode()) {
             case W -> player.setLayoutY(player.getLayoutY() - velocidadePlayer);
             case S -> player.setLayoutY(player.getLayoutY() + velocidadePlayer);
@@ -74,6 +74,7 @@ public class FightController {
             case D -> player.setLayoutX(player.getLayoutX() + velocidadePlayer);
             default -> { }
         }
+
         limitarPlayerNaTela();
         verificarDano();
     }
@@ -81,10 +82,16 @@ public class FightController {
     @FXML
     private void atacar(MouseEvent event) {
         if (batalhaEncerrada || event.getButton() != MouseButton.PRIMARY) return;
+
         if (inimigo.getBoundsInParent().contains(event.getX(), event.getY())) {
-            vidaInimigo -= 10;
+            int danoPlayer = 10 + faseAtual * 2;
+            vidaInimigo -= danoPlayer;
+
             atualizarVida();
-            if (vidaInimigo <= 0) derrotarInimigo();
+
+            if (vidaInimigo <= 0) {
+                derrotarInimigo();
+            }
         }
     }
 
@@ -96,22 +103,32 @@ public class FightController {
                     stop();
                     return;
                 }
+
                 moverInimigo();
+
                 if (random.nextInt(100) < 2) {
                     direcaoX = random.nextDouble() * 2 - 1;
                     direcaoY = random.nextDouble() * 2 - 1;
                 }
+
                 verificarDano();
             }
         };
+
         timer.start();
     }
 
     private void moverInimigo() {
         inimigo.setLayoutX(inimigo.getLayoutX() + direcaoX * velocidadeInimigo);
         inimigo.setLayoutY(inimigo.getLayoutY() + direcaoY * velocidadeInimigo);
-        if (inimigo.getLayoutX() <= 0 || inimigo.getLayoutX() >= fightPane.getWidth() - inimigo.getFitWidth()) direcaoX *= -1;
-        if (inimigo.getLayoutY() <= 0 || inimigo.getLayoutY() >= fightPane.getHeight() - inimigo.getFitHeight()) direcaoY *= -1;
+
+        if (inimigo.getLayoutX() <= 0 || inimigo.getLayoutX() >= fightPane.getWidth() - inimigo.getFitWidth()) {
+            direcaoX *= -1;
+        }
+
+        if (inimigo.getLayoutY() <= 0 || inimigo.getLayoutY() >= fightPane.getHeight() - inimigo.getFitHeight()) {
+            direcaoY *= -1;
+        }
     }
 
     private void verificarDano() {
@@ -124,7 +141,8 @@ public class FightController {
                 ultimoDano = agora;
 
                 if (gameController != null) {
-                    gameController.levarDano(5);
+                    int danoInimigo = 4 + faseAtual * 4;
+                    gameController.levarDano(danoInimigo);
 
                     if (gameController.jogadorMorreu()) {
                         batalhaEncerrada = true;
@@ -138,26 +156,6 @@ public class FightController {
                         if (stage != null) {
                             stage.close();
                         }
-
-                        return;
-                    }
-                }else if (game2Controller != null) {
-                    game2Controller.levarDano(5);
-
-                    if (game2Controller.jogadorMorreu()) {
-                        batalhaEncerrada = true;
-
-                        if (timer != null) {
-                            timer.stop();
-                        }
-
-                        game2Controller.abrirGameOver();
-
-                        if (stage != null) {
-                            stage.close();
-                        }
-
-                        return;
                     }
                 }
             }
@@ -166,22 +164,23 @@ public class FightController {
 
     private void derrotarInimigo() {
         batalhaEncerrada = true;
-        if (timer != null) timer.stop();
+
+        if (timer != null) {
+            timer.stop();
+        }
+
         inimigo.setVisible(false);
         vidaInimigoLabel.setText("Inimigo derrotado!");
+
         if (gameController != null) {
-            gameController.ganharXP(25);
-            gameController.ganharMoedas(20);
-            gameController.adicionarItem("Fragmento de alma");
-        }else if(game2Controller != null) {
-            game2Controller.ganharXP(25);
-            game2Controller.ganharMoedas(20);
-            game2Controller.adicionarItem("Fragmento de alma");
+            gameController.ganharXP(20 + faseAtual * 20);
+            gameController.ganharMoedas(15 + faseAtual * 12);
+            gameController.adicionarItem("Fragmento de alma Fase " + faseAtual);
         }
-        
-        
-        
-        if (stage != null) stage.close();
+
+        if (stage != null) {
+            stage.close();
+        }
     }
 
     private void limitarPlayerNaTela() {
@@ -190,6 +189,6 @@ public class FightController {
     }
 
     private void atualizarVida() {
-        vidaInimigoLabel.setText("Vida do inimigo: " + vidaInimigo);
+        vidaInimigoLabel.setText("Vida do inimigo: " + Math.max(0, vidaInimigo) + "/" + vidaMaxInimigo);
     }
 }

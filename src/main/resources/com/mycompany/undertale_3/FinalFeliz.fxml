@@ -9,9 +9,9 @@
            prefWidth="1366"
            prefHeight="768"
            xmlns:fx="http://javafx.com/fxml"
-           fx:controller="com.mycompany.undertale_3.controller.GameOverController">
+           fx:controller="com.mycompany.undertale_3.controller.FinalFelizController">
 
-    <ImageView fx:id="gameOverImage"
+    <ImageView fx:id="FinalFelizImage"
                preserveRatio="false"/>
 
     <VBox alignment="BOTTOM_CENTER"
@@ -19,9 +19,9 @@
           prefHeight="768"
           style="-fx-padding: 0 0 60 0;">
 
-        <Button fx:id="botaoTelaInicial"
+        <Button fx:id="botaoTelaRanking"
                 text="Tela Inicial"
-                onAction="#voltarTelaInicial"
+                onAction="#ranking"
                 prefWidth="220"
                 prefHeight="45"
                 style="-fx-font-size:18px;

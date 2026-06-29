@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<Pane prefWidth="800" prefHeight="600"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.mycompany.undertale_3.controller.GameOverController">
+<StackPane fx:id="root"
+           prefWidth="1366"
+           prefHeight="768"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.mycompany.undertale_3.controller.GameOverController">
 
-    <Pane prefWidth="800" prefHeight="600" style="-fx-background-color: black;"/>
+    <ImageView fx:id="gameOverImage"
+               preserveRatio="false"/>
 
-    <Label layoutX="260" layoutY="190"
-           text="GAME OVER"
-           style="-fx-text-fill: red; -fx-font-size: 52; -fx-font-weight: bold;"/>
+    <VBox alignment="BOTTOM_CENTER"
+          prefWidth="1366"
+          prefHeight="768"
+          style="-fx-padding: 0 0 60 0;">
 
-    <Button
-    text="Tela Inicial"
-    onAction="#voltarTelaInicial"
-    layoutX="320"
-    layoutY="320"
-    prefWidth="160"
-    prefHeight="45"/>
-</Pane>
+        <Button fx:id="botaoTelaInicial"
+                text="Tela Inicial"
+                onAction="#voltarTelaInicial"
+                prefWidth="220"
+                prefHeight="45"
+                style="-fx-font-size:18px;
+                       -fx-font-weight:bold;
+                       -fx-background-color:#C62828;
+                       -fx-text-fill:white;"/>
+    </VBox>
+
+</StackPane>

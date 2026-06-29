@@ -1,24 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
 
-<Pane prefWidth="800" prefHeight="600"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.mycompany.undertale_3.controller.CombatMenuController">
+<StackPane fx:id="combatPane"
+           prefWidth="900"
+           prefHeight="650"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.mycompany.undertale_3.controller.CombatMenuController"
+           styleClass="combat-root">
 
-    <Pane prefWidth="800" prefHeight="600" style="-fx-background-color: black;"/>
+    <VBox alignment="CENTER" spacing="25">
 
-    <Label fx:id="inimigoLabel" layoutX="350" layoutY="100" text="Inimigo" style="-fx-text-fill: white; -fx-font-size: 24;"/>
-    
-    <ImageView fx:id="inimigo1" layoutX="200" layoutY="100" fitWidth="400" fitHeight="400" preserveRatio="true"/>
+        <Label fx:id="inimigoLabel"
+               text="INIMIGO"
+               styleClass="combat-title"/>
 
-    <Button layoutX="230" layoutY="450" text="Lutar" onAction="#lutar"/>
-    <Button layoutX="350" layoutY="450" text="Conversar" onAction="#conversar"/>
-    <Button layoutX="500" layoutY="450" text="Fugir" onAction="#fugir"/>
+        <StackPane styleClass="enemy-card"
+                   prefWidth="520"
+                   prefHeight="330">
 
-    <Label fx:id="mensagemLabel" layoutX="180" layoutY="520" text="" style="-fx-text-fill: white; -fx-font-size: 16;"/>
+            <ImageView fx:id="inimigo1"
+                       fitWidth="420"
+                       fitHeight="280"
+                       preserveRatio="true"/>
+        </StackPane>
 
-</Pane>
+        <HBox alignment="CENTER" spacing="25">
+            <Button text="LUTAR" onAction="#lutar" styleClass="combat-btn"/>
+            <Button text="CONVERSAR" onAction="#conversar" styleClass="combat-btn"/>
+            <Button text="FUGIR" onAction="#fugir" styleClass="combat-btn"/>
+        </HBox>
+
+        <Label fx:id="mensagemLabel"
+               text=""
+               wrapText="true"
+               maxWidth="650"
+               styleClass="combat-msg"/>
+
+    </VBox>
+
+</StackPane>
